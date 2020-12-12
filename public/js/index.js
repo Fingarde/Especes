@@ -142,9 +142,11 @@ function removeDiacritics (str) {
     if(!changes) {
         changes = defaultDiacriticsRemovalMap;
     }
+    
     for(var i=0; i<changes.length; i++) {
         str = str.replace(changes[i].letters, changes[i].base);
     }
+
     return str;
 }
 
@@ -152,6 +154,7 @@ function removeDiacritics (str) {
 
 let random 
 let cpt = 0;
+let dejaTrouve = false
 
 function loadImage() {
     document.getElementById('espece').value = ''
@@ -162,6 +165,8 @@ function loadImage() {
 
     document.getElementById('ordre').classList.remove('juste')
     document.getElementById('ordre').classList.remove('faux')
+
+    dejaTrouve = false
 
     random = especes[Math.floor(Math.random() * especes.length)]
 
@@ -219,7 +224,12 @@ function verifier() {
         document.getElementById('ordre').classList.add('faux')
     }
 
-    if(especeJuste && ordreJuste) cpt++
+    if(especeJuste && ordreJuste) {
+        if(! dejaTrouve) {
+            cpt++
+            dejaTrouve = true
+        }
+    }
     else cpt = 0;
 
     document.getElementById('score').innerHTML = "Score : " + cpt
